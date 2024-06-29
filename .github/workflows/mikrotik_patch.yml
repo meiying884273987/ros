@@ -1,7 +1,5 @@
 name: Patch Mikrotik RouterOS
 on:
-  # push:
-  #   branches: [ "main" ]
   schedule:
     - cron: "0 0 * * *"
   workflow_dispatch:
@@ -274,16 +272,6 @@ jobs:
         cp install-image-$LATEST_VERSION.zip ./publish/
         cp all_packages-x86-$LATEST_VERSION.zip ./publish/
         cp ./new_iso/*.npk ./publish/
-
-    - name: Sync files
-      uses: SamKirkland/FTP-Deploy-Action@v4.3.5
-      with:
-        server: ${{ secrets.FTP_SERVER }}:9999
-        username:  ${{ secrets.FTP_USERNAME }}
-        password: ${{ secrets.FTP_PASSWORD }}
-        server-dir: "${{ secrets.FTP_DIRECTORY }}/${{ env.LATEST_VERSION }}/"
-        local-dir: ./publish/
- 
 
     - name: Delete Release tag ${{ env.LATEST_VERSION }}
       run: |
